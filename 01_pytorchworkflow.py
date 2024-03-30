@@ -22,7 +22,7 @@ import torch.nn as nn # All neural network modules, nn.Linear, nn.Conv2d, BatchN
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+"""
 # 1) Model
 # Linear model f = wx + b (or y = mx + b)
 # weight = b, bias = w. 
@@ -73,6 +73,7 @@ plt.scatter(X[:n_train], y[:n_train], c='green', label='Training data')
 plt.scatter(X[n_train:], y[n_train:], c='red', label='Test data')
 plt.legend()
 plt.show()
+"""
 
 # 2) Model
 # Start with random weights and biases. Look at training data and adjust weights and biases to get closer to the ideal values.
@@ -83,8 +84,8 @@ class LinearRegressionModel(nn.Module): # nn.Module is the base class for all ne
     
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs) # super() is used to call the constructor of the parent class. In this case, the parent class is nn.Module.
-        self.weight = nn.Parameter(torch.randn(1, torch.float)) # nn.Parameter is a wrapper for a tensor that tells a nn.Module that it has weights that need to be updated during training. 
-        self.bias = nn.Parameter(torch.randn(1, torch.float)) # torch.randn returns a tensor filled with random numbers from a normal distribution with mean 0 and variance 1. The shape of the tensor is defined by the variable arguments. In this case, the shape is 1.
+        self.weight = nn.Parameter(torch.randn(1, dtype=torch.float)) # nn.Parameter is a wrapper for a tensor that tells a nn.Module that it has weights that need to be updated during training. 
+        self.bias = nn.Parameter(torch.randn(1, dtype=torch.float)) # torch.randn returns a tensor filled with random numbers from a normal distribution with mean 0 and variance 1. The shape of the tensor is defined by the variable arguments. In this case, the shape is 1.
 
     def forward(self, x: torch.Tensor): # forward pass
         return self.weight * x + self.bias
@@ -92,6 +93,11 @@ class LinearRegressionModel(nn.Module): # nn.Module is the base class for all ne
     def predict(self, x: torch.Tensor): # predict method
         return self.forward(x)
     
+
+torch.manual_seed(20)
+lrm = LinearRegressionModel() 
+print(list(lrm.parameters()))
+print(lrm.state_dict())
 
 
 
